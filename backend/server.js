@@ -16,9 +16,9 @@ connectCloudinary();
 // INFO: Middleware
 app.use(express.json());
 const corsOptions = {
-  origin: true,
-  credentials: true,
-  optionSuccessStatus: 200
+    origin: true,
+    credentials: true,
+    optionSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));

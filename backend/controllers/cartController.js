@@ -65,7 +65,49 @@ const getCartDetails = async (req, res) => {
   }
 };
 
+const removeFromCart = async (req, res) => {
+  try {
+    const { userId, productId } = req.body;
+
+    if (!userId || !productId) {
+      return res.status(400).json({ success: false, message: "Missing fields" });
+    }
+
+    const product = await productModel.findById(productId);
+    if (!product) {
+      return res.status(404).json({ success: false, message: "Product not found" });
+    }
+
+    const user = await userModel.findById(userId);
+    console.log(user)
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    if (user.cartData && user.cartData[productId]) {
+      delete user.cartData[productId]; // Remove from cart
+      user.markModified('cartData');   // Let Mongoose know we modified a mixed type
+      await user.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Product removed from cart",
+        cartData: user.cartData,
+      });
+    } else {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found in cart",
+      });
+    }
+
+  } catch (error) {
+    console.error("Error Removing cart details:", error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 
 export {
-  addToCart, getCartDetails
+  addToCart, getCartDetails, removeFromCart
 };
