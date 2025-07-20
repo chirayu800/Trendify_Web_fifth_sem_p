@@ -1,11 +1,11 @@
-import express from "express";
+// import express from "express";
 
-import { addToCart, getCartDetails } from "../controllers/cartController.js";
+// import { addToCart, getCartDetails } from "../controllers/cartController.js";
 
 
-const cartRouter = express.Router();
+// const cartRouter = express.Router();
 
-cartRouter.post("/add", addToCart);
-cartRouter.get("/list/:userId", getCartDetails);
+// cartRouter.post("/add", addToCart);
+// cartRouter.get("/list/:userId", getCartDetails);
 
-export default cartRouter;
+// export default cartRouter;
